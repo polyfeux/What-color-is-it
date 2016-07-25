@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>What color is it?</title>
+</head>
+<style type="text/css" media="screen">
+  body {
+    background-color: #ffffff;
+    -webkit-transition: all 0.8s;
+    -ms-transition: all 0.8s;
+    transition: all 0.8s;
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  #wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /*color: #ffffff;*/
+    font-family: 'Arial Narrow';
+    font-size: 60px;
+  }
+
+  #hex-color {
+    font-size: 20px;
+    text-align: center;
+  }
+</style>
+
+<body>
+  <div id="wrapper">
+    <div id="clock"></div>
+    <br/>
+    <div id="hex-color"></div>
+  </div>
+  <script>
+    function makebinary(n) {
+      return (n < 10 ? (n = 0 + "" + n) : n)
+    }
+
+    function farbigeUhr() {
+      var d = new Date();
+
+      var displayHours = makebinary(d.getHours());
+      var displayMins = makebinary(d.getMinutes());
+      var displaySecs = makebinary(d.getSeconds());
+      document.getElementById("clock").innerHTML = "" + displayHours + " " + displayMins + " " + displaySecs;
+
+      var secs = d.getSeconds();
+      var colorOfMoment = secs * 6;
+      hueOfMoment = colorOfMoment.toFixed(0);
+
+      //document.getElementById("clock").innerHTML = "precise: " + colorOfMoment + " / hue: " + hueOfMoment;
+      document.body.style.background =  "hsl(" + hueOfMoment + ", 90%, 45%)";
+    }
+
+    var d = setInterval(function() {
+      farbigeUhr()
+    }, 200);
+  </script>
+</body>
+
+</html>

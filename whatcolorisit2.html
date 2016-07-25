@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>What color is it?</title>
+</head>
+<style type="text/css" media="screen">
+  body {
+    background-color: #ffffff;
+    -webkit-transition: all 0.8s;
+    -ms-transition: all 0.8s;
+    transition: all 0.8s;
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  #wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /*color: #ffffff;*/
+    font-family: 'Arial Narrow';
+    font-size: 60px;
+  }
+
+  #hex-color {
+    font-size: 20px;
+    text-align: center;
+  }
+</style>
+
+<body>
+  <div id="wrapper">
+    <div id="clock"></div>
+    <br/>
+    <div id="hex-color"></div>
+  </div>
+  <script>
+    function makeHex(n) {
+      while (n.length < 6) {
+        n = "0" + n;
+      }
+      return n;
+    }
+
+    function decimalToHex(d) {
+      var a = (+d).toString(16).toUpperCase();
+      return a;
+    }
+
+    function farbigeUhr() {
+      var d = new Date();
+
+      // von dem einen Datum jeweils nur die Stunden/Minuten/Sekunden verwenden
+      var hours = d.getHours() * 3600;
+      var mins = d.getMinutes() * 60;
+      var secs = d.getSeconds();
+      var secsOfDay = hours + mins + secs;
+      // 16,7 Mio Farben, 86400 s/Tag
+      // 16,7/86400 = ca. 193 (abgerundet, um nicht ueber den Farbereich hinaus zu kommen)
+      var colorOfMoment = secsOfDay * 193;
+      var colorOfMomentHex = decimalToHex(colorOfMoment);
+
+      document.getElementById("clock").innerHTML = "#" + makeHex(colorOfMomentHex);
+      document.body.style.background =  "#" + makeHex(colorOfMomentHex);
+    }
+
+    var d = setInterval(function() {
+      farbigeUhr()
+    }, 200);
+  </script>
+</body>
+
+</html>
